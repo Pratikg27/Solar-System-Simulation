@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solar System Simulation</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1 class="title">Solar System Simulation</h1>
+
+    <!-- Shooting Star (background effect) -->
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+
+    <div class="solar-system">
+      <!-- 🌞 Sun with rotation -->
+      <div class="sun" data-name="Sun"></div>
+
+      <!-- Mercury -->
+      <div class="orbit mercury-orbit">
+        <div class="planet mercury" data-name="Mercury">
+          <span class="label">Mercury</span>
+        </div>
+      </div>
+
+      <!-- Venus -->
+      <div class="orbit venus-orbit">
+        <div class="planet venus" data-name="Venus">
+          <span class="label">Venus</span>
+        </div>
+      </div>
+
+      <!-- 🌍 Earth with Moon -->
+      <div class="orbit earth-orbit">
+        <div class="planet earth" data-name="Earth">
+          <span class="label">Earth</span>
+          <div class="moon-orbit">
+            <div class="moon" data-name="Moon"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mars -->
+      <div class="orbit mars-orbit">
+        <div class="planet mars" data-name="Mars">
+          <span class="label">Mars</span>
+        </div>
+      </div>
+
+      <!-- 🌐 Jupiter with Moon -->
+      <div class="orbit jupiter-orbit">
+        <div class="planet jupiter" data-name="Jupiter">
+          <span class="label">Jupiter</span>
+          <div class="moon-orbit jupiter-moon-orbit">
+            <div class="moon" data-name="Jupiter's Moon"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🪐 Saturn with Moon -->
+      <div class="orbit saturn-orbit">
+        <div class="planet saturn" data-name="Saturn">
+          <span class="label">Saturn</span>
+          <div class="moon-orbit jupiter-moon-orbit">
+            <div class="moon" data-name="Saturn's Moon"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Uranus -->
+      <div class="orbit uranus-orbit">
+        <div class="planet uranus" data-name="Uranus">
+          <span class="label">Uranus</span>
+        </div>
+      </div>
+
+      <!-- Neptune -->
+      <div class="orbit neptune-orbit">
+        <div class="planet neptune" data-name="Neptune">
+          <span class="label">Neptune</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button id="pauseBtn">Pause</button>
+      <button id="resumeBtn">Resume</button>
+    </div>
+
+    <!-- Info Panel -->
+    <div id="infoPanel" class="info-panel">
+      <h2 id="planetName">Click or hover a planet</h2>
+      <p id="planetDetails">Details will appear here...</p>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+  </body>
+</html>

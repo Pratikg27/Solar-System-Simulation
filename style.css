@@ -1,0 +1,229 @@
+/* Global Styles */
+body {
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #0d1b2a 0%, #000000 100%);
+  color: white;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  width: 100vw;
+  background-attachment: fixed;
+}
+
+/* Star field overlay */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/* Title */
+.title {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+  color: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Solar System Container */
+.solar-system {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🌞 Sun with rotation */
+.sun {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #ffec97, #ff9900, #ff4500);
+  border-radius: 50%;
+  position: absolute;
+  z-index: 10;
+  box-shadow: 0 0 60px 30px rgba(255, 204, 0, 0.8);
+  animation: sun-spin 20s linear infinite;
+  will-change: transform;
+}
+
+@keyframes sun-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Orbit Rings */
+.orbit {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: spin linear infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Planets */
+.planet {
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  z-index: 5;
+  cursor: pointer;
+  will-change: transform;
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Planet Labels */
+.label {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 25px;
+  left: -10px;
+  text-shadow: 0 0 5px black;
+  pointer-events: none;
+}
+
+/* Orbit Sizes & Speeds */
+.mercury-orbit { width: 120px; height: 120px; animation-duration: 6s; }
+.venus-orbit   { width: 180px; height: 180px; animation-duration: 12s; }
+.earth-orbit   { width: 250px; height: 250px; animation-duration: 20s; }
+.mars-orbit    { width: 320px; height: 320px; animation-duration: 30s; }
+.jupiter-orbit { width: 420px; height: 420px; animation-duration: 50s; }
+.saturn-orbit  { width: 520px; height: 520px; animation-duration: 70s; }
+.uranus-orbit  { width: 600px; height: 600px; animation-duration: 90s; }
+.neptune-orbit { width: 680px; height: 680px; animation-duration: 110s; }
+
+/* Planet Sizes & Colors */
+.mercury { width: 12px; height: 12px; background: gray; right: -6px; }
+.venus   { width: 18px; height: 18px; background: orange; right: -9px; }
+.earth   { width: 22px; height: 22px; background: blue; right: -11px; }
+.mars    { width: 16px; height: 16px; background: red; right: -8px; }
+.jupiter { width: 40px; height: 40px; background: brown; right: -20px; }
+.saturn  { width: 34px; height: 34px; background: khaki; right: -17px; }
+.uranus  { width: 28px; height: 28px; background: lightblue; right: -14px; }
+.neptune { width: 28px; height: 28px; background: darkblue; right: -14px; }
+
+/* 🪐 Saturn Rings */
+.saturn::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 70px; height: 20px;
+  border: 2px solid rgba(200, 200, 150, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(25deg);
+  box-shadow: 0 0 10px rgba(200, 200, 150, 0.5);
+  pointer-events: none;
+}
+
+/* 🌙 Moon Orbits */
+.moon-orbit {
+  width: 40px; height: 40px;
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 4s linear infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.moon {
+  width: 10px; height: 10px;
+  background: lightgray;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; right: -5px;
+  transform: translateY(-50%);
+  z-index: 9;
+  pointer-events: auto;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+/* Info Panel */
+.info-panel {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 260px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+#planetName {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #ffd700;
+}
+
+#planetDetails {
+  font-size: 14px;
+  color: #f0f0f0;
+}
+
+/* Controls */
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+button {
+  margin: 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #555;
+}
+
+/* Orbit Rotation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* 🌠 Shooting Star Effect */
+@keyframes shooting-star {
+  0%   { transform: translateX(0) translateY(0); opacity: 1; }
+  100% { transform: translateX(-1000px) translateY(1000px); opacity: 0; }
+}
+
+.shooting-star {
+  position: absolute;
+  top: 10%;
+  left: 90%;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px white;
+  animation: shooting-star 3s linear infinite;
+}
