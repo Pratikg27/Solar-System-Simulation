@@ -1,103 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Solar System Simulation</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1 class="title">Solar System Simulation</h1>
 
-    <!-- Shooting Star (background effect) -->
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solar System Simulation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
 
-    <div class="solar-system">
-      <!-- 🌞 Sun with rotation -->
-      <div class="sun" data-name="Sun"></div>
+<body>
+  <!-- Enhanced Header Section -->
+  <header class="site-header" id="header">
+    <div class="logo">
+      <h1>Solar System Explorer</h1>
+    </div>
+
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#solar-system">Solar System</a></li>
+        <li><a href="#exploration">Exploration</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-icons">
+      <button id="aboutBtn">ℹ️ Info</button>
+      <a href="#" title="Search"><i class="fas fa-search"></i></a>
+      <a href="https://facebook.com" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://instagram.com" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero-section">
+    <h1 class="hero-title">Solar System Simulation</h1>
+    <p class="hero-subtitle">Explore the wonders of our cosmic neighborhood with interactive 3D planets, real astronomical data, and stunning visual effects</p>
+    <a href="#solar-system" class="cta-button">Start Exploring</a>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <h2 class="section-title">About Our Solar System</h2>
+    <div class="about-content">
+      <p>Journey through space and time with our interactive Solar System simulation. Discover the unique characteristics of each planet, their moons, and the magnificent Sun that powers our cosmic neighborhood.</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Interactive Planets</h3>
+        <p>Click on any celestial body to explore detailed information about planets, moons, and astronomical data.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔭</div>
+        <h3>Real Astronomy</h3>
+        <p>Based on actual NASA and ESA data with realistic orbital mechanics and planetary characteristics.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⭐</div>
+        <h3>Stunning Visuals</h3>
+        <p>Beautiful animations, shooting stars, and realistic planet textures create an immersive experience.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <h3>Full Control</h3>
+        <p>Pause, resume, zoom in/out, and reset the view to explore at your own pace.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solar System Section -->
+  <section id="solar-system" class="solar-system-section">
+    <h2 class="section-title">Interactive Solar System</h2>
+    <p class="solar-system-description">Click on any planet or moon to discover fascinating details about our cosmic neighbors</p>
+
+    <!-- Multi-directional Shooting Stars -->
+    <div class="shooting-star shooting-star-1"></div>
+    <div class="shooting-star shooting-star-2"></div>
+    <div class="shooting-star shooting-star-3"></div>
+    <div class="shooting-star shooting-star-4"></div>
+    <div class="shooting-star shooting-star-5"></div>
+    <div class="shooting-star shooting-star-6"></div>
+    <div class="shooting-star shooting-star-7"></div>
+    <div class="shooting-star shooting-star-8"></div>
+
+    <div class="solar-system" id="solarSystem">
+      <!-- Sun with rotation -->
+      <div class="sun celestial-body" data-name="Sun"></div>
 
       <!-- Mercury -->
       <div class="orbit mercury-orbit">
-        <div class="planet mercury" data-name="Mercury">
+        <div class="planet mercury celestial-body" data-name="Mercury">
           <span class="label">Mercury</span>
         </div>
       </div>
 
       <!-- Venus -->
       <div class="orbit venus-orbit">
-        <div class="planet venus" data-name="Venus">
+        <div class="planet venus celestial-body" data-name="Venus">
           <span class="label">Venus</span>
         </div>
       </div>
 
-      <!-- 🌍 Earth with Moon -->
+      <!-- Earth with Moon -->
       <div class="orbit earth-orbit">
-        <div class="planet earth" data-name="Earth">
+        <div class="planet earth celestial-body" data-name="Earth">
           <span class="label">Earth</span>
           <div class="moon-orbit">
-            <div class="moon" data-name="Moon"></div>
+            <div class="moon celestial-body" data-name="Moon">
+              <span class="label">Moon</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Mars -->
       <div class="orbit mars-orbit">
-        <div class="planet mars" data-name="Mars">
+        <div class="planet mars celestial-body" data-name="Mars">
           <span class="label">Mars</span>
         </div>
       </div>
 
-      <!-- 🌐 Jupiter with Moon -->
+      <!-- Jupiter with Moon -->
       <div class="orbit jupiter-orbit">
-        <div class="planet jupiter" data-name="Jupiter">
+        <div class="planet jupiter celestial-body" data-name="Jupiter">
           <span class="label">Jupiter</span>
           <div class="moon-orbit jupiter-moon-orbit">
-            <div class="moon" data-name="Jupiter's Moon"></div>
+            <div class="moon celestial-body" data-name="Jupiter's Moon">
+              <span class="label">Jupiter's Moon</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- 🪐 Saturn with Moon -->
+      <!-- Saturn with Moon -->
       <div class="orbit saturn-orbit">
-        <div class="planet saturn" data-name="Saturn">
+        <div class="planet saturn celestial-body" data-name="Saturn">
           <span class="label">Saturn</span>
           <div class="moon-orbit jupiter-moon-orbit">
-            <div class="moon" data-name="Saturn's Moon"></div>
+            <div class="moon celestial-body" data-name="Saturn's Moon">
+              <span class="label">Saturn's Moon</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Uranus -->
       <div class="orbit uranus-orbit">
-        <div class="planet uranus" data-name="Uranus">
+        <div class="planet uranus celestial-body" data-name="Uranus">
           <span class="label">Uranus</span>
         </div>
       </div>
 
       <!-- Neptune -->
       <div class="orbit neptune-orbit">
-        <div class="planet neptune" data-name="Neptune">
+        <div class="planet neptune celestial-body" data-name="Neptune">
           <span class="label">Neptune</span>
         </div>
       </div>
     </div>
 
-    <!-- Controls -->
+    <!-- Enhanced Controls with Zoom -->
     <div class="controls">
-      <button id="pauseBtn">Pause</button>
-      <button id="resumeBtn">Resume</button>
+      <button id="pauseBtn">⏸️ Pause</button>
+      <button id="resumeBtn">▶️ Resume</button>
+      <button id="zoomInBtn">🔍+ Zoom In</button>
+      <button id="zoomOutBtn">🔍- Zoom Out</button>
+      <button id="resetViewBtn">🏠 Reset View</button>
     </div>
+  </section>
 
-    <!-- Info Panel -->
-    <div id="infoPanel" class="info-panel">
-      <h2 id="planetName">Click or hover a planet</h2>
-      <p id="planetDetails">Details will appear here...</p>
+  <!-- Exploration Section -->
+  <section id="exploration" class="exploration-section">
+    <h2 class="section-title">Space Exploration</h2>
+    <div class="exploration-grid">
+      <div class="exploration-card">
+        <div class="card-content">
+          <h3 class="card-title">🚀 Mars Missions</h3>
+          <p class="card-description">Discover ongoing and future missions to the Red Planet, including rovers, orbiters, and planned human expeditions.</p>
+        </div>
+      </div>
+      <div class="exploration-card">
+        <div class="card-content">
+          <h3 class="card-title">🛰️ Space Telescopes</h3>
+          <p class="card-description">Learn about Hubble, James Webb, and other space telescopes that help us understand the universe.</p>
+        </div>
+      </div>
+      <div class="exploration-card">
+        <div class="card-content">
+          <h3 class="card-title">🌙 Lunar Exploration</h3>
+          <p class="card-description">From Apollo missions to future lunar bases, explore humanity's relationship with our closest celestial neighbor.</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Script -->
-    <script src="script.js"></script>
-  </body>
+  <!-- Enhanced Info Panel -->
+  <div id="infoPanel" class="info-panel">
+    <div class="info-header">
+      <h2 id="planetName">🌌 Solar System Explorer</h2>
+      <button class="info-close-btn">✕</button>
+    </div>
+    <div class="info-content">
+      <p id="planetDetails">
+        Click or hover over any celestial body to explore detailed information
+        about planets, moons, and our Sun!
+      </p>
+      <div id="planetStats" class="planet-stats"></div>
+
+      <!-- View More Details Button -->
+      <a id="moreInfoLink" href="/info/planet.html" target="_blank">
+        <button id="moreInfoBtn">📘 View More Details</button>
+      </a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>🚀 About This Project</h2>
+      <p>
+        An interactive Solar System Simulation with realistic planetary
+        colors, orbital mechanics, and detailed astronomical information.
+      </p>
+      <p><strong>Made with ❤️ by Pratik Gunjal</strong></p>
+      <p>
+        Features: Real-time orbits, zoom functionality, detailed planet info,
+        and stunning visual effects!
+      </p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Made with ❤️ by Pratik Gunjal | Astronomical Data from NASA & ESA</p>
+  </footer>
+
+  <script src="/script.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9851f5c007bb9aa1',t:'MTc1ODg4MTMwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
 </html>
