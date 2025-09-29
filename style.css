@@ -850,3 +850,18 @@ html {
     align-items: center;
   }
 }
+
+
+#infoPanel {
+  max-width: 400px;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 600px) {
+  #infoPanel {
+    max-width: 95%;
+    font-size: 0.9rem;
+  }
+}
