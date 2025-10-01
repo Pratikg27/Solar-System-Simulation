@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Solar System Simulation</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
@@ -29,7 +29,8 @@
       <button id="aboutBtn">ℹ️ Info</button>
       <a href="#" title="Search"><i class="fas fa-search"></i></a>
       <a href="https://facebook.com" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="https://instagram.com" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://instagram.com" target="_blank" rel="noopener" title="Instagram"><i
+          class="fab fa-instagram"></i></a>
       <a href="https://linkedin.com" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
       <a href="https://github.com" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
     </div>
@@ -38,7 +39,8 @@
   <!-- Hero Section -->
   <section id="home" class="hero-section">
     <h1 class="hero-title">Solar System Simulation</h1>
-    <p class="hero-subtitle">Explore the wonders of our cosmic neighborhood with interactive 3D planets, real astronomical data, and stunning visual effects</p>
+    <p class="hero-subtitle">Explore the wonders of our cosmic neighborhood with interactive 3D planets, real
+      astronomical data, and stunning visual effects</p>
     <a href="#solar-system" class="cta-button">Start Exploring</a>
   </section>
 
@@ -46,9 +48,10 @@
   <section id="about" class="about-section">
     <h2 class="section-title">About Our Solar System</h2>
     <div class="about-content">
-      <p>Journey through space and time with our interactive Solar System simulation. Discover the unique characteristics of each planet, their moons, and the magnificent Sun that powers our cosmic neighborhood.</p>
+      <p>Journey through space and time with our interactive Solar System simulation. Discover the unique
+        characteristics of each planet, their moons, and the magnificent Sun that powers our cosmic neighborhood.</p>
     </div>
-    
+
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">🌍</div>
@@ -76,7 +79,8 @@
   <!-- Solar System Section -->
   <section id="solar-system" class="solar-system-section">
     <h2 class="section-title">Interactive Solar System</h2>
-    <p class="solar-system-description">Click on any planet or moon to discover fascinating details about our cosmic neighbors</p>
+    <p class="solar-system-description">Click on any planet or moon to discover fascinating details about our cosmic
+      neighbors</p>
 
     <!-- Multi-directional Shooting Stars -->
     <div class="shooting-star shooting-star-1"></div>
@@ -96,6 +100,7 @@
       <div class="orbit mercury-orbit">
         <div class="planet mercury celestial-body" data-name="Mercury">
           <span class="label">Mercury</span>
+          <div class="hover-preview"></div>
         </div>
       </div>
 
@@ -103,6 +108,7 @@
       <div class="orbit venus-orbit">
         <div class="planet venus celestial-body" data-name="Venus">
           <span class="label">Venus</span>
+          <div class="hover-preview"></div>
         </div>
       </div>
 
@@ -110,9 +116,11 @@
       <div class="orbit earth-orbit">
         <div class="planet earth celestial-body" data-name="Earth">
           <span class="label">Earth</span>
+          <div class="hover-preview"></div>
           <div class="moon-orbit">
             <div class="moon celestial-body" data-name="Moon">
               <span class="label">Moon</span>
+              <div class="hover-preview"></div>
             </div>
           </div>
         </div>
@@ -122,16 +130,24 @@
       <div class="orbit mars-orbit">
         <div class="planet mars celestial-body" data-name="Mars">
           <span class="label">Mars</span>
+          <div class="hover-preview"></div>
         </div>
+      </div>
+
+      <!-- Asteroid Belt (Simplified) -->
+      <div class="orbit asteroid-belt-orbit">
+        <div class="asteroid-belt"></div>
       </div>
 
       <!-- Jupiter with Moon -->
       <div class="orbit jupiter-orbit">
         <div class="planet jupiter celestial-body" data-name="Jupiter">
           <span class="label">Jupiter</span>
+          <div class="hover-preview"></div>
           <div class="moon-orbit jupiter-moon-orbit">
             <div class="moon celestial-body" data-name="Jupiter's Moon">
               <span class="label">Jupiter's Moon</span>
+              <div class="hover-preview"></div>
             </div>
           </div>
         </div>
@@ -141,9 +157,11 @@
       <div class="orbit saturn-orbit">
         <div class="planet saturn celestial-body" data-name="Saturn">
           <span class="label">Saturn</span>
+          <div class="hover-preview"></div>
           <div class="moon-orbit jupiter-moon-orbit">
             <div class="moon celestial-body" data-name="Saturn's Moon">
               <span class="label">Saturn's Moon</span>
+              <div class="hover-preview"></div>
             </div>
           </div>
         </div>
@@ -153,6 +171,7 @@
       <div class="orbit uranus-orbit">
         <div class="planet uranus celestial-body" data-name="Uranus">
           <span class="label">Uranus</span>
+          <div class="hover-preview"></div>
         </div>
       </div>
 
@@ -160,17 +179,23 @@
       <div class="orbit neptune-orbit">
         <div class="planet neptune celestial-body" data-name="Neptune">
           <span class="label">Neptune</span>
+          <div class="hover-preview"></div>
         </div>
       </div>
     </div>
 
-    <!-- Enhanced Controls with Zoom -->
+    <!-- Enhanced Controls with Zoom and Speed -->
     <div class="controls">
       <button id="pauseBtn">⏸️ Pause</button>
       <button id="resumeBtn">▶️ Resume</button>
       <button id="zoomInBtn">🔍+ Zoom In</button>
       <button id="zoomOutBtn">🔍- Zoom Out</button>
       <button id="resetViewBtn">🏠 Reset View</button>
+      <div class="speed-control">
+        <label for="speedSlider">Speed:</label>
+        <input type="range" id="speedSlider" min="0.1" max="2" value="1" step="0.1">
+        <span id="currentSpeed">1x</span>
+      </div>
     </div>
   </section>
 
@@ -181,19 +206,22 @@
       <div class="exploration-card">
         <div class="card-content">
           <h3 class="card-title">🚀 Mars Missions</h3>
-          <p class="card-description">Discover ongoing and future missions to the Red Planet, including rovers, orbiters, and planned human expeditions.</p>
+          <p class="card-description">Discover ongoing and future missions to the Red Planet, including rovers,
+            orbiters, and planned human expeditions.</p>
         </div>
       </div>
       <div class="exploration-card">
         <div class="card-content">
           <h3 class="card-title">🛰️ Space Telescopes</h3>
-          <p class="card-description">Learn about Hubble, James Webb, and other space telescopes that help us understand the universe.</p>
+          <p class="card-description">Learn about Hubble, James Webb, and other space telescopes that help us understand
+            the universe.</p>
         </div>
       </div>
       <div class="exploration-card">
         <div class="card-content">
           <h3 class="card-title">🌙 Lunar Exploration</h3>
-          <p class="card-description">From Apollo missions to future lunar bases, explore humanity's relationship with our closest celestial neighbor.</p>
+          <p class="card-description">From Apollo missions to future lunar bases, explore humanity's relationship with
+            our closest celestial neighbor.</p>
         </div>
       </div>
     </div>
@@ -240,7 +268,6 @@
     <p>Made with ❤️ by Pratik Gunjal | Astronomical Data from NASA & ESA</p>
   </footer>
 
-  <script src="/script.js"></script>
-<!-- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9851f5c007bb9aa1',t:'MTc1ODg4MTMwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body> -->
+  <script src="script.js"></script>
 
 </html>

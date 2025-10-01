@@ -2,6 +2,7 @@
 const planetInfo = {
   "Sun": {
     description: "☀️ The Sun — a G-type main-sequence star that provides light & energy to the Solar System. Contains 99.86% of the system's mass.",
+    shortFact: "Our star, 99.86% of solar system mass.",
     stats: {
       "Diameter": "1.39 million km",
       "Core Temperature": "15 million °C",
@@ -12,6 +13,7 @@ const planetInfo = {
   },
   "Mercury": {
     description: "☿ Mercury — the smallest planet and closest to the Sun. Experiences extreme temperature variations due to lack of atmosphere.",
+    shortFact: "Smallest planet, extreme temps.",
     stats: {
       "Diameter": "4,879 km",
       "Orbital Period": "88 days",
@@ -22,6 +24,7 @@ const planetInfo = {
   },
   "Venus": {
     description: "♀ Venus — similar in size to Earth but with a toxic atmosphere and extreme greenhouse effect, making it the hottest planet.",
+    shortFact: "Hottest planet, Earth's 'twin'.",
     stats: {
       "Diameter": "12,104 km",
       "Orbital Period": "225 days",
@@ -32,6 +35,7 @@ const planetInfo = {
   },
   "Earth": {
     description: "🌍 Earth — our home planet and the only known world with life. 70% of its surface is covered by water.",
+    shortFact: "Our home, only known life.",
     stats: {
       "Diameter": "12,742 km",
       "Orbital Period": "365.25 days",
@@ -42,6 +46,7 @@ const planetInfo = {
   },
   "Moon": {
     description: "🌙 The Moon — Earth's only natural satellite. Influences tides and stabilizes Earth's axial tilt.",
+    shortFact: "Earth's only natural satellite.",
     stats: {
       "Diameter": "3,474 km",
       "Orbital Period": "27.3 days",
@@ -51,6 +56,7 @@ const planetInfo = {
   },
   "Mars": {
     description: "♂ Mars — the Red Planet. Known for its iron oxide-rich soil, dust storms, and the tallest volcano in the solar system (Olympus Mons).",
+    shortFact: "The Red Planet, Olympus Mons.",
     stats: {
       "Diameter": "6,779 km",
       "Orbital Period": "687 days",
@@ -61,6 +67,7 @@ const planetInfo = {
   },
   "Jupiter": {
     description: "♃ Jupiter — the largest planet in the Solar System. Famous for its Great Red Spot, a giant storm lasting centuries.",
+    shortFact: "Largest planet, Great Red Spot.",
     stats: {
       "Diameter": "139,820 km",
       "Orbital Period": "12 years",
@@ -70,7 +77,8 @@ const planetInfo = {
     }
   },
   "Jupiter's Moon": {
-    description: "🛰️ One of Jupiter's many moons — examples include Europa, Ganymede, Io, and Callisto.",
+    description: "🛰️ One of Jupiter's many moons — examples include Europa, Ganymede, Io, and Callisto. Europa may have a subsurface ocean beneath its icy crust.",
+    shortFact: "Many moons, Europa has ocean.",
     stats: {
       "Largest Moon": "Ganymede (5,268 km)",
       "Interesting Fact": "Europa may have a subsurface ocean beneath its icy crust."
@@ -78,6 +86,7 @@ const planetInfo = {
   },
   "Saturn": {
     description: "♄ Saturn — known for its stunning ring system made of ice and rock particles. A gas giant similar to Jupiter.",
+    shortFact: "Famous rings, gas giant.",
     stats: {
       "Diameter": "116,460 km",
       "Orbital Period": "29 years",
@@ -87,7 +96,8 @@ const planetInfo = {
     }
   },
   "Saturn's Moon": {
-    description: "🛰️ Saturn's moons — Titan is the largest, bigger than Mercury, and has lakes of liquid methane.",
+    description: "🛰️ Saturn's moons — Titan is the largest, bigger than Mercury, and has lakes of liquid methane. Enceladus ejects water plumes, hinting at subsurface oceans.",
+    shortFact: "Titan (larger than Mercury), Enceladus plumes.",
     stats: {
       "Largest Moon": "Titan (5,150 km)",
       "Interesting Fact": "Enceladus ejects water plumes, hinting at subsurface oceans."
@@ -95,6 +105,7 @@ const planetInfo = {
   },
   "Uranus": {
     description: "♅ Uranus — an ice giant with a tilted axis of 98°, making it roll on its side as it orbits the Sun.",
+    shortFact: "Ice giant, rotates on its side.",
     stats: {
       "Diameter": "50,724 km",
       "Orbital Period": "84 years",
@@ -105,6 +116,7 @@ const planetInfo = {
   },
   "Neptune": {
     description: "♆ Neptune — the farthest planet from the Sun. Known for supersonic winds and deep blue color caused by methane.",
+    shortFact: "Farthest planet, supersonic winds.",
     stats: {
       "Diameter": "49,244 km",
       "Orbital Period": "165 years",
@@ -121,9 +133,17 @@ const planetNameEl = document.getElementById("planetName");
 const planetDetailsEl = document.getElementById("planetDetails");
 const planetStatsEl = document.getElementById("planetStats");
 const closeBtn = document.querySelector(".info-close-btn");
+const moreInfoLink = document.getElementById("moreInfoLink"); // Get the anchor tag
 
-function showInfo(name) {
+let currentSelectedBody = null; // To keep track of the currently selected body
+
+function showInfo(name, element) {
   console.log("showInfo called for:", JSON.stringify(name));
+
+  // Remove highlight from previously selected body
+  if (currentSelectedBody) {
+    currentSelectedBody.classList.remove("selected");
+  }
 
   const data = planetInfo[name];
   if (!data) {
@@ -131,6 +151,7 @@ function showInfo(name) {
     planetNameEl.textContent = name || "Unknown object";
     planetDetailsEl.textContent = "No information available for this object.";
     planetStatsEl.innerHTML = "";
+    moreInfoLink.style.display = "none"; // Hide the button if no data
     infoPanel.style.display = "block";
     return;
   }
@@ -147,11 +168,26 @@ function showInfo(name) {
     planetStatsEl.appendChild(p);
   }
 
+  // Update "View More Details" link dynamically
+  moreInfoLink.href = `/info/planet.html?planet=${encodeURIComponent(name)}`;
+  moreInfoLink.style.display = "block"; // Show the button
+
   infoPanel.style.display = "block";
+
+  // Add highlight to the current selected body
+  if (element) {
+    element.classList.add("selected");
+    currentSelectedBody = element;
+  }
 }
 
 closeBtn.addEventListener("click", () => {
   infoPanel.style.display = "none";
+  // Remove highlight when panel is closed
+  if (currentSelectedBody) {
+    currentSelectedBody.classList.remove("selected");
+    currentSelectedBody = null;
+  }
 });
 
 // ------------------- Event Delegation for Celestial Bodies -------------------
@@ -162,8 +198,25 @@ solarSystemContainer.addEventListener("click", (e) => {
 
   const name = (body.dataset.name || "").trim();
   console.log("Clicked:", name);
-  showInfo(name);
+  showInfo(name, body); // Pass the clicked element to showInfo
 });
+
+// ------------------- Hover Previews -------------------
+solarSystemContainer.addEventListener("mouseover", (e) => {
+  const body = e.target.closest(".celestial-body");
+  if (!body || !solarSystemContainer.contains(body)) return;
+
+  const name = (body.dataset.name || "").trim();
+  const data = planetInfo[name];
+  const hoverPreview = body.querySelector(".hover-preview");
+
+  if (hoverPreview && data && data.shortFact) {
+    hoverPreview.textContent = data.shortFact;
+  } else if (hoverPreview) {
+    hoverPreview.textContent = name; // Fallback to just name
+  }
+});
+
 
 // ------------------- Pause / Resume -------------------
 const solarSystem = document.getElementById("solarSystem");
@@ -202,6 +255,22 @@ resetViewBtn.addEventListener("click", () => {
   solarSystem.classList.remove("zoomed");
 });
 
+// ------------------- Speed Control -------------------
+const speedSlider = document.getElementById("speedSlider");
+const currentSpeedSpan = document.getElementById("currentSpeed");
+
+speedSlider.addEventListener("input", (e) => {
+  const speed = parseFloat(e.target.value);
+  currentSpeedSpan.textContent = `${speed}x`;
+
+  // Apply speed to all animations
+  document.documentElement.style.setProperty('--animation-speed-multiplier', 1 / speed);
+});
+
+// Set initial speed multiplier
+document.documentElement.style.setProperty('--animation-speed-multiplier', 1);
+
+
 // ------------------- About Modal -------------------
 const aboutBtn = document.getElementById("aboutBtn");
 const aboutModal = document.getElementById("aboutModal");
@@ -236,7 +305,10 @@ window.addEventListener("scroll", () => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
+    const href = this.getAttribute('href');
+    if (!href || href === '#') return;  // Skip invalid or empty hash links
+
+    const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({
         behavior: 'smooth',
