@@ -1,4 +1,4 @@
-// Planet information database (unchanged)
+// Planet information database
 const planetInfo = {
   "Sun": {
     description: "☀️ The Sun — a G-type main-sequence star that provides light & energy to the Solar System. Contains 99.86% of the system's mass.",
@@ -137,13 +137,12 @@ const moreInfoLink = document.getElementById("moreInfoLink"); // Get the anchor 
 
 let currentSelectedBody = null; // To keep track of the currently selected body
 
-function showInfo(name, element = null) {
+function showInfo(name, element) {
   console.log("showInfo called for:", JSON.stringify(name));
 
   // Remove highlight from previously selected body
   if (currentSelectedBody) {
     currentSelectedBody.classList.remove("selected");
-    currentSelectedBody = null;
   }
 
   const data = planetInfo[name];
@@ -175,14 +174,10 @@ function showInfo(name, element = null) {
 
   infoPanel.style.display = "block";
 
-  // Find and highlight the celestial body if element not provided (for search)
-  let targetElement = element;
-  if (!targetElement) {
-    targetElement = document.querySelector(`[data-name="${name}"]`);
-  }
-  if (targetElement && targetElement.classList.contains("celestial-body")) {
-    targetElement.classList.add("selected");
-    currentSelectedBody = targetElement;
+  // Add highlight to the current selected body
+  if (element) {
+    element.classList.add("selected");
+    currentSelectedBody = element;
   }
 }
 
@@ -206,60 +201,21 @@ solarSystemContainer.addEventListener("click", (e) => {
   showInfo(name, body); // Pass the clicked element to showInfo
 });
 
-// ------------------- Hover/Touch Previews -------------------
-function handlePreview(e, show = true) {
-  const body = e.target ? e.target.closest(".celestial-body") : e;
+// ------------------- Hover Previews -------------------
+solarSystemContainer.addEventListener("mouseover", (e) => {
+  const body = e.target.closest(".celestial-body");
   if (!body || !solarSystemContainer.contains(body)) return;
 
   const name = (body.dataset.name || "").trim();
   const data = planetInfo[name];
   const hoverPreview = body.querySelector(".hover-preview");
 
-  if (hoverPreview) {
-    if (show && data && data.shortFact) {
-      hoverPreview.textContent = data.shortFact;
-    } else if (show) {
-      hoverPreview.textContent = name; // Fallback to just name
-    }
-    hoverPreview.style.opacity = show ? "1" : "0";
-    hoverPreview.style.visibility = show ? "visible" : "hidden";
+  if (hoverPreview && data && data.shortFact) {
+    hoverPreview.textContent = data.shortFact;
+  } else if (hoverPreview) {
+    hoverPreview.textContent = name; // Fallback to just name
   }
-}
-
-// Mouse events (for desktop)
-solarSystemContainer.addEventListener("mouseover", (e) => {
-  handlePreview(e, true);
 });
-
-solarSystemContainer.addEventListener("mouseout", (e) => {
-  handlePreview(e, false);
-});
-
-// Touch events (for mobile) - Simulate hover on touch
-solarSystemContainer.addEventListener("touchstart", (e) => {
-  if (e.touches.length > 1) return; // Ignore multi-touch
-  const touch = e.touches[0];
-  const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  const body = target ? target.closest(".celestial-body") : null;
-  if (body && solarSystemContainer.contains(body)) {
-    e.preventDefault(); // Prevent page scroll on touch
-    handlePreview(body, true); // Show preview on touch
-  }
-}, { passive: false }); // Non-passive to allow preventDefault
-
-solarSystemContainer.addEventListener("touchend", (e) => {
-  // Brief delay to show preview, then hide (simulates quick tooltip)
-  setTimeout(() => {
-    const touch = e.changedTouches[0];
-    const target = document.elementFromPoint(touch.clientX, touch.clientY);
-    const body = target ? target.closest(".celestial-body") : null;
-    if (body && solarSystemContainer.contains(body)) {
-      handlePreview(body, false); // Hide preview after touch ends
-    }
-  }, 150); // Short delay for visibility
-}, { passive: true });
-
-// Ensure touch click still works for info panel (already handled by click event delegation)
 
 
 // ------------------- Pause / Resume -------------------
@@ -307,13 +263,13 @@ speedSlider.addEventListener("input", (e) => {
   const speed = parseFloat(e.target.value);
   currentSpeedSpan.textContent = `${speed}x`;
 
-  // Apply speed to all animations using CSS custom property
-  const multiplier = speed; // Direct multiplier for speed (higher = faster)
-  document.documentElement.style.setProperty('--animation-speed-multiplier', multiplier);
+  // Apply speed to all animations
+  document.documentElement.style.setProperty('--animation-speed-multiplier', 1 / speed);
 });
 
 // Set initial speed multiplier
 document.documentElement.style.setProperty('--animation-speed-multiplier', 1);
+
 
 // ------------------- About Modal -------------------
 const aboutBtn = document.getElementById("aboutBtn");
@@ -331,104 +287,6 @@ closeModal.addEventListener("click", () => {
 window.addEventListener("click", (e) => {
   if (e.target === aboutModal) {
     aboutModal.style.display = "none";
-  }
-});
-
-// ------------------- Search Dropdown Logic -------------------
-const searchLink = document.getElementById("searchLink");
-const searchDropdown = document.getElementById("searchDropdown");
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
-let isDropdownOpen = false;
-
-// Toggle search dropdown
-searchLink.addEventListener("click", (e) => {
-  e.preventDefault();
-  e.stopPropagation(); // Prevent bubbling to document click
-
-  if (isDropdownOpen) {
-    closeSearchDropdown();
-  } else {
-    openSearchDropdown();
-  }
-});
-
-// Open dropdown
-function openSearchDropdown() {
-  searchDropdown.classList.add("active");
-  isDropdownOpen = true;
-  searchInput.focus(); // Auto-focus input
-  searchInput.value = ""; // Clear input
-  updateSearchResults(""); // Clear results
-}
-
-// Close dropdown
-function closeSearchDropdown() {
-  searchDropdown.classList.remove("active");
-  isDropdownOpen = false;
-  searchInput.value = ""; // Clear input
-}
-
-// Handle search input (real-time filtering)
-searchInput.addEventListener("input", (e) => {
-  const query = e.target.value.trim().toLowerCase();
-  updateSearchResults(query);
-});
-
-// Handle Enter key to search (optional, since it's real-time)
-searchInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    const query = e.target.value.trim().toLowerCase();
-    updateSearchResults(query);
-  }
-});
-
-// Handle Escape key to close dropdown
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeSearchDropdown();
-  }
-});
-
-// Function to update search results
-function updateSearchResults(query) {
-  searchResults.innerHTML = ""; // Clear previous results
-
-  if (!query) {
-    const noQueryMsg = document.createElement("p");
-    noQueryMsg.textContent = "Start typing to search for celestial bodies...";
-    searchResults.appendChild(noQueryMsg);
-    return;
-  }
-
-  const matches = Object.keys(planetInfo).filter(name => 
-    name.toLowerCase().includes(query)
-  );
-
-  if (matches.length === 0) {
-    const noResultsMsg = document.createElement("p");
-    noResultsMsg.textContent = "No results found. Try another name (e.g., Earth, Moon, Jupiter).";
-    searchResults.appendChild(noResultsMsg);
-    return;
-  }
-
-  // Display matching results
-  matches.forEach(name => {
-    const resultDiv = document.createElement("div");
-    resultDiv.textContent = name;
-    resultDiv.addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent closing on click
-      showInfo(name); // Calls showInfo without element (it will auto-find)
-      closeSearchDropdown(); // Close dropdown
-    });
-    searchResults.appendChild(resultDiv);
-  });
-}
-
-// Close dropdown on outside click
-document.addEventListener("click", (e) => {
-  if (isDropdownOpen && !searchDropdown.contains(e.target) && e.target !== searchLink) {
-    closeSearchDropdown();
   }
 });
 
@@ -459,3 +317,135 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+
+// ------------------- Search Functionality -------------------
+// Elements
+const searchBtn = document.getElementById("searchBtn");
+const searchModal = document.getElementById("searchModal");
+const closeSearchBtn = document.getElementById("closeSearchBtn");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const searchError = document.getElementById("searchError");
+
+let searchTimeout; // For debouncing (prevents too many searches while typing)
+
+// Step 1: Open modal on button click
+searchBtn.addEventListener("click", () => {
+  searchModal.style.display = "flex";
+  searchInput.focus(); // Auto-focus input
+  searchResults.innerHTML = ""; // Clear previous results
+  searchError.style.display = "none";
+});
+
+// Step 2: Close modal
+closeSearchBtn.addEventListener("click", () => {
+  closeSearchModal();
+});
+
+function closeSearchModal() {
+  searchModal.style.display = "none";
+  searchInput.value = "";
+  searchResults.innerHTML = "";
+  searchResults.classList.remove("show");
+  searchError.style.display = "none";
+}
+
+// Close on outside click
+searchModal.addEventListener("click", (e) => {
+  if (e.target === searchModal) {
+    closeSearchModal();
+  }
+});
+
+// Close on Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && searchModal.style.display === "flex") {
+    closeSearchModal();
+  }
+});
+
+// Step 3: Handle input (debounced search)
+searchInput.addEventListener("input", (e) => {
+  clearTimeout(searchTimeout);
+  const query = e.target.value.trim();
+  if (query.length === 0) {
+    searchResults.innerHTML = "";
+    searchResults.classList.remove("show");
+    searchError.style.display = "none";
+    return;
+  }
+  // Debounce: Wait 300ms after typing stops
+  searchTimeout = setTimeout(() => {
+    if (query.length >= 2) { // Minimum 2 chars for search
+      performSearch(query.toLowerCase());
+    } else {
+      searchResults.innerHTML = "";
+      searchResults.classList.remove("show");
+    }
+  }, 300);
+});
+
+// Step 4: Perform search using planetInfo
+function performSearch(query) {
+  const matches = [];
+  for (const name in planetInfo) {
+    if (name.toLowerCase().includes(query)) { // Case-insensitive partial match
+      matches.push(name);
+    }
+  }
+
+  if (matches.length > 0) {
+    searchError.style.display = "none";
+    displaySearchResults(matches);
+  } else {
+    searchResults.innerHTML = "";
+    searchResults.classList.remove("show");
+    searchError.style.display = "block";
+  }
+}
+
+// Step 5: Display results as clickable list
+function displaySearchResults(matches) {
+  searchResults.innerHTML = "";
+  matches.slice(0, 5).forEach((name) => { // Limit to top 5 results
+    const item = document.createElement("div");
+    item.className = "search-result-item";
+    item.innerHTML = `
+      <span class="search-result-name">${name}</span>
+      <button class="search-result-btn" onclick="openDetailedPage('${name}')">View Full Info</button>
+    `;
+    // Click entire item to open info panel
+    item.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("search-result-btn")) {
+        selectSearchResult(name);
+      }
+    });
+    searchResults.appendChild(item);
+  });
+  searchResults.classList.add("show");
+}
+
+// Step 6: Select result - Open info panel and highlight body
+function selectSearchResult(name) {
+  // Find the celestial body element (if exists in simulation)
+  const body = document.querySelector(`[data-name="${name}"]`);
+  
+  // Open info panel (your existing function)
+  showInfo(name, body); // This highlights and shows panel
+  
+  // Smooth scroll to solar system section
+  const solarSection = document.getElementById("solar-system");
+  if (solarSection) {
+    solarSection.scrollIntoView({ behavior: "smooth" });
+  }
+  
+  closeSearchModal();
+}
+
+// Step 7: Open detailed page in new tab
+function openDetailedPage(name) {
+  const url = `/info/planet.html?planet=${encodeURIComponent(name)}`;
+  window.open(url, "_blank"); // New tab
+  closeSearchModal();
+}

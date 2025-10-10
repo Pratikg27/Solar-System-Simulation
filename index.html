@@ -26,24 +26,29 @@
     </nav>
 
     <div class="nav-icons">
-      <button id="aboutBtn">ℹ️ Info</button>
-      
-      <!-- Search Icon and Dropdown -->
-      <div class="search-container">
-        <a href="#" id="searchLink" title="Search"><i class="fas fa-search"></i></a>
-        <div id="searchDropdown" class="search-dropdown">
-          <input type="text" id="searchInput" placeholder="Search celestial bodies (e.g., Earth, Moon)..." />
-          <div id="searchResults"></div>
-        </div>
-      </div>
-      
-      <a href="https://facebook.com" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="https://instagram.com" target="_blank" rel="noopener" title="Instagram"><i
-          class="fab fa-instagram"></i></a>
-      <a href="https://linkedin.com" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-    </div>
+  <button id="aboutBtn">ℹ️ Info</button>
+  <!-- Search Button: Changed to button for JS control -->
+  <button id="searchBtn" title="Search"><i class="fas fa-search"></i></button>
+  <a href="https://facebook.com" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook"></i></a>
+  <a href="https://instagram.com" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="https://linkedin.com" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+  <a href="https://github.com" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+</div>
   </header>
+
+  <!-- Search Modal -->
+<div id="searchModal" class="search-modal">
+  <div class="search-modal-content">
+    <div class="search-header">
+      <h3>🔍 Search Celestial Bodies</h3>
+      <button id="closeSearchBtn" class="close-btn">&times;</button>
+    </div>
+    <input type="text" id="searchInput" placeholder="Type to search (e.g., Earth, Moon, Sun, Jupiter)..." autocomplete="off">
+    <div id="searchResults" class="search-results"></div>
+    <div id="searchError" class="search-error" style="display: none;">No matching planets, moons, or Sun found. Try again!</div>
+  </div>
+</div>
+
 
   <!-- Hero Section -->
   <section id="home" class="hero-section">
@@ -256,7 +261,7 @@
     </div>
   </div>
 
-  <!-- Modal for About (unchanged) -->
+  <!-- Modal -->
   <div id="aboutModal" class="modal">
     <div class="modal-content">
       <span class="close-modal">&times;</span>

@@ -150,7 +150,6 @@ const planetInfo = {
     }
 };
 
-
 // Create animated stars background
 function createStars() {
     const starsContainer = document.getElementById('stars');
@@ -245,46 +244,84 @@ function setupPlanetInteractions() {
     });
 }
 
+// Updated function to handle URL search params (auto-scroll and highlight for search integration)
 function loadDynamicPlanetDetails() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const planetName = urlParams.get('planet');
+    const urlParams = new URLSearchParams(window.location.search);
+    const planetName = urlParams.get('planet');
 
-  if (planetName && planetInfo[planetName]) {
-    const data = planetInfo[planetName];
+    if (planetName) {
+        // Normalize the planet name for ID matching (e.g., "Earth" -> "planet-earth", "Jupiter's Moon" -> "planet-moons")
+        let normalizedId = `planet-${planetName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+        
+        // Fallbacks for special cases
+        if (planetName.toLowerCase().includes('sun')) {
+            normalizedId = 'planet-sun';
+        } else if (planetName.toLowerCase().includes('moon') || planetName.toLowerCase().includes("jupiter's moon") || planetName.toLowerCase().includes("saturn's moon")) {
+            normalizedId = 'planet-moons';
+        }
 
-    const dynamicSection = document.getElementById('dynamicPlanetDetailSection');
-    if (dynamicSection) {
-      dynamicSection.style.display = 'block';
-      dynamicSection.classList.add('visible');
+        // Find the target element
+        let targetElement = document.getElementById(normalizedId);
+
+        // If no exact match, fallback to planets grid or moons
+        if (!targetElement) {
+            if (planetName.toLowerCase().includes('moon')) {
+                targetElement = document.getElementById('planet-moons');
+            } else {
+                targetElement = document.getElementById('planets');
+            }
+        }
+
+        if (targetElement) {
+            // Auto-scroll to the element
+            targetElement.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+
+            // Add highlight class for glow effect
+            targetElement.classList.add('search-highlight');
+
+            // Remove highlight after 5 seconds
+            setTimeout(() => {
+                targetElement.classList.remove('search-highlight');
+            }, 5000);
+        }
+
+        // Optional: Update page title dynamically if planet matches planetInfo
+        if (planetInfo[planetName]) {
+            document.getElementById('dynamicPageTitle').textContent = `${planetInfo[planetName].title} - Solar System Explorer`;
+            document.getElementById('dynamicHeroTitle').textContent = planetInfo[planetName].title;
+            document.getElementById('dynamicHeroSubtitle').textContent = planetInfo[planetName].description;
+        }
     }
-
-    const titleEl = document.getElementById('dynamicPlanetDetailTitle');
-    if (titleEl) titleEl.innerHTML = data.title;
-
-    const descEl = document.getElementById('dynamicPlanetDetailDescription');
-    if (descEl) descEl.innerHTML = data.description;
-
-    const factsContainer = document.getElementById('dynamicPlanetDetailFacts');
-    if (factsContainer) {
-      factsContainer.innerHTML = '';
-      for (const key in data.facts) {
-        const factDiv = document.createElement('div');
-        factDiv.className = 'sun-fact';
-        factDiv.innerHTML = `<h3>${key}</h3><p>${data.facts[key]}</p>`;
-        factsContainer.appendChild(factDiv);
-      }
-    }
-
-    // Optionally scroll to the dynamic section
-    if (dynamicSection) {
-      setTimeout(() => {
-        dynamicSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    }
-  }
 }
 
+// Inject CSS for search highlight effect (dynamic, no need to edit style1.css)
+function injectHighlightCSS() {
+    if (!document.getElementById('search-highlight-style')) {
+        const style = document.createElement('style');
+        style.id = 'search-highlight-style';
+        style.textContent = `
+            .search-highlight {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.8) !important;
+                transform: scale(1.05) !important;
+                                border-color: rgba(255, 215, 0, 0.5) !important;
+                animation: pulseHighlight 1s ease-in-out infinite alternate;
+            }
 
+            @keyframes pulseHighlight {
+                from { 
+                    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); 
+                }
+                to { 
+                    box-shadow: 0 0 40px rgba(255, 215, 0, 1); 
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
 
 // Initialize all functionality
 function init() {
@@ -293,7 +330,8 @@ function init() {
     setupScrollAnimations();
     setupContactForm();
     setupPlanetInteractions();
-    loadDynamicPlanetDetails(); // Call this on init for dynamic content
+    injectHighlightCSS(); // Inject CSS for search highlight effect
+    loadDynamicPlanetDetails(); // Handle URL search params (auto-scroll and highlight)
 }
 
 // Run initialization when DOM is loaded
