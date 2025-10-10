@@ -1164,3 +1164,140 @@ html {
     font-size: 0.9rem;
   }
 }
+
+
+/* Search Dropdown Styles (Inline in Header) */
+.search-container {
+  position: relative;
+  display: inline-block;
+}
+
+#searchLink {
+  color: #fff;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+#searchLink:hover {
+  color: #00d9ff;
+  transform: scale(1.2);
+}
+
+#searchDropdown {
+  position: absolute;
+  top: 100%; /* Position below the icon */
+  right: 0;
+  width: 300px; /* Fixed width for desktop */
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  padding: 10px;
+  max-height: 0;
+  overflow: hidden;
+}
+
+#searchDropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  max-height: 300px; /* Allow space for results */
+}
+
+#searchInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 10px;
+  /* backdrop-filter: blur(10px); */
+}
+
+#searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#searchInput:focus {
+  border-color: #00d9ff;
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+}
+
+#searchResults {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#searchResults div {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease;
+  color: white;
+  font-size: 14px;
+}
+
+#searchResults div:hover {
+  background: rgba(0, 217, 255, 0.2);
+  color: #00d9ff;
+}
+
+#searchResults div:last-child {
+  border-bottom: none;
+}
+
+#searchResults p {
+  padding: 10px 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Responsive: On mobile, make search full-width and centered */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 0 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .nav-icons {
+    margin-right: 0;
+    gap: 10px;
+  }
+
+  #searchDropdown {
+    position: fixed;
+    top: 80px; /* Below header */
+    left: 50%;
+    right: 50%;
+    width: auto;
+    min-width: 280px;
+    transform: translateX(-50%) translateY(-10px);
+    border-radius: 15px;
+  }
+
+  #searchDropdown.active {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  #searchInput {
+    font-size: 16px; /* Larger for touch */
+  }
+}
+
+@media (max-width: 520px) {
+  #searchDropdown {
+    min-width: 250px;
+  }
+}
